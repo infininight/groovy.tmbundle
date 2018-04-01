@@ -32,28 +32,72 @@
 			<string>comment.line.hashbang.groovy</string>
 		</dict>
 		<dict>
-			<key>captures</key>
+			<key>begin</key>
+			<string>^\s*(package)(?=\s|\z)</string>
+			<key>beginCaptures</key>
 			<dict>
 				<key>1</key>
 				<dict>
 					<key>name</key>
-					<string>keyword.other.package.groovy</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>storage.modifier.package.groovy</string>
-				</dict>
-				<key>3</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.terminator.groovy</string>
+					<string>keyword.control.package.groovy</string>
 				</dict>
 			</dict>
-			<key>match</key>
-			<string>^\s*(package)\b(?:\s*([^ ;$]+)\s*(;)?)?</string>
+			<key>end</key>
+			<string>\n|(;)|(?=//)</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.terminator.statement.groovy</string>
+				</dict>
+			</dict>
 			<key>name</key>
 			<string>meta.package.groovy</string>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>captures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>entity.name.type.package.groovy</string>
+							<key>patterns</key>
+							<array>
+								<dict>
+									<key>match</key>
+									<string>\.</string>
+									<key>name</key>
+									<string>punctuation.separator.package.groovy</string>
+								</dict>
+							</array>
+						</dict>
+					</dict>
+					<key>match</key>
+					<string>(?x)
+						\G\s+									# Must directly follow keyword
+						(										# Valid identifiers separated by .
+							(
+								[a-zA-Z$_\x{00C0}-\x{00D6}\x{00D8}-\x{00F6}\x{00F8}-\x{00FF}\x{0100}-\x{FFFE}]
+								[a-zA-Z0-9_\x{00C0}-\x{00D6}\x{00D8}-\x{00F6}\x{00F8}-\x{00FF}\x{0100}-\x{FFFE}]*
+								\.
+							)*
+							(
+								[a-zA-Z$_\x{00C0}-\x{00D6}\x{00D8}-\x{00F6}\x{00F8}-\x{00FF}\x{0100}-\x{FFFE}]
+								[a-zA-Z0-9_\x{00C0}-\x{00D6}\x{00D8}-\x{00F6}\x{00F8}-\x{00FF}\x{0100}-\x{FFFE}]*
+							  | \*								# Or import all
+							)
+						)
+					</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\S[^;/]*</string>
+					<key>name</key>
+					<string>invalid.illegal.character-not-allowed-here.groovy</string>
+				</dict>
+			</array>
 		</dict>
 		<dict>
 			<key>begin</key>
