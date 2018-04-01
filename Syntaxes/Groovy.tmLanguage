@@ -57,66 +57,7 @@
 		</dict>
 		<dict>
 			<key>begin</key>
-			<string>(import static)\b\s*</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>keyword.other.import.static.groovy</string>
-				</dict>
-			</dict>
-			<key>captures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>keyword.other.import.groovy</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>storage.modifier.import.groovy</string>
-				</dict>
-				<key>3</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.terminator.groovy</string>
-				</dict>
-			</dict>
-			<key>contentName</key>
-			<string>storage.modifier.import.groovy</string>
-			<key>end</key>
-			<string>\s*(?:$|(?=%&gt;)(;))</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.terminator.groovy</string>
-				</dict>
-			</dict>
-			<key>name</key>
-			<string>meta.import.groovy</string>
-			<key>patterns</key>
-			<array>
-				<dict>
-					<key>match</key>
-					<string>\.</string>
-					<key>name</key>
-					<string>punctuation.separator.groovy</string>
-				</dict>
-				<dict>
-					<key>match</key>
-					<string>\s</string>
-					<key>name</key>
-					<string>invalid.illegal.character_not_allowed_here.groovy</string>
-				</dict>
-			</array>
-		</dict>
-		<dict>
-			<key>begin</key>
-			<string>(import)\b\s*</string>
+			<string>(import)(\s+static)?(?=\s|\z)</string>
 			<key>beginCaptures</key>
 			<dict>
 				<key>1</key>
@@ -124,35 +65,20 @@
 					<key>name</key>
 					<string>keyword.other.import.groovy</string>
 				</dict>
-			</dict>
-			<key>captures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>keyword.other.import.groovy</string>
-				</dict>
 				<key>2</key>
 				<dict>
 					<key>name</key>
-					<string>storage.modifier.import.groovy</string>
-				</dict>
-				<key>3</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.terminator.groovy</string>
+					<string>storage.modifier.static.groovy</string>
 				</dict>
 			</dict>
-			<key>contentName</key>
-			<string>storage.modifier.import.groovy</string>
 			<key>end</key>
-			<string>\s*(?:$|(?=%&gt;)|(;))</string>
+			<string>\n|(;)|(?=//|%&gt;)</string>
 			<key>endCaptures</key>
 			<dict>
 				<key>1</key>
 				<dict>
 					<key>name</key>
-					<string>punctuation.terminator.groovy</string>
+					<string>punctuation.terminator.statement.groovy</string>
 				</dict>
 			</dict>
 			<key>name</key>
@@ -160,47 +86,64 @@
 			<key>patterns</key>
 			<array>
 				<dict>
+					<key>captures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>entity.name.type.package.groovy</string>
+							<key>patterns</key>
+							<array>
+								<dict>
+									<key>match</key>
+									<string>\.</string>
+									<key>name</key>
+									<string>punctuation.separator.package.groovy</string>
+								</dict>
+							</array>
+						</dict>
+					</dict>
 					<key>match</key>
-					<string>\.</string>
-					<key>name</key>
-					<string>punctuation.separator.groovy</string>
+					<string>(?x)
+						\G\s+									# Must directly follow keyword
+						(										# Valid identifiers separated by .
+							(
+								[a-zA-Z$_\x{00C0}-\x{00D6}\x{00D8}-\x{00F6}\x{00F8}-\x{00FF}\x{0100}-\x{FFFE}]
+								[a-zA-Z0-9_\x{00C0}-\x{00D6}\x{00D8}-\x{00F6}\x{00F8}-\x{00FF}\x{0100}-\x{FFFE}]*
+								\.
+							)*
+							(
+								[a-zA-Z$_\x{00C0}-\x{00D6}\x{00D8}-\x{00F6}\x{00F8}-\x{00FF}\x{0100}-\x{FFFE}]
+								[a-zA-Z0-9_\x{00C0}-\x{00D6}\x{00D8}-\x{00F6}\x{00F8}-\x{00FF}\x{0100}-\x{FFFE}]*
+  							  | \*								# Or import all
+							)
+						)
+					</string>
+				</dict>
+				<dict>
+					<key>captures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>storage.modifier.implements.groovy</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>name</key>
+							<string>entity.other.inherited-class.groovy</string>
+						</dict>
+					</dict>
+					<key>match</key>
+					<string>(?!\G)\s+(as)\s+(\w+)</string>
 				</dict>
 				<dict>
 					<key>match</key>
-					<string>\s</string>
+					<string>\S[^;/%]*</string>
 					<key>name</key>
-					<string>invalid.illegal.character_not_allowed_here.groovy</string>
+					<string>invalid.illegal.character-not-allowed-here.groovy</string>
 				</dict>
 			</array>
-		</dict>
-		<dict>
-			<key>captures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>keyword.other.import.groovy</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>keyword.other.import.static.groovy</string>
-				</dict>
-				<key>3</key>
-				<dict>
-					<key>name</key>
-					<string>storage.modifier.import.groovy</string>
-				</dict>
-				<key>4</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.terminator.groovy</string>
-				</dict>
-			</dict>
-			<key>match</key>
-			<string>^\s*(import)(?:\s+(static)\s+)\b(?:\s*([^ ;$]+)\s*(;)?)?</string>
-			<key>name</key>
-			<string>meta.import.groovy</string>
 		</dict>
 		<dict>
 			<key>include</key>
