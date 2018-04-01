@@ -1726,29 +1726,43 @@
 			<key>patterns</key>
 			<array>
 				<dict>
-					<key>applyEndPatternLast</key>
-					<integer>1</integer>
-					<key>begin</key>
-					<string>\$\w</string>
-					<key>end</key>
-					<string>(?=\W)</string>
+					<key>captures</key>
+					<dict>
+						<key>1</key>
+						<dict>
+							<key>name</key>
+							<string>punctuation.definition.variable.groovy</string>
+						</dict>
+						<key>2</key>
+						<dict>
+							<key>patterns</key>
+							<array>
+								<dict>
+									<key>match</key>
+									<string>\.</string>
+									<key>name</key>
+									<string>punctuation.separator.package.groovy</string>
+								</dict>
+							</array>
+						</dict>
+					</dict>
+					<key>match</key>
+					<string>(?x)
+						(\$)
+						(										# Valid identifiers separated by .
+							(
+								[a-zA-Z$_\x{00C0}-\x{00D6}\x{00D8}-\x{00F6}\x{00F8}-\x{00FF}\x{0100}-\x{FFFE}]
+								[a-zA-Z0-9_\x{00C0}-\x{00D6}\x{00D8}-\x{00F6}\x{00F8}-\x{00FF}\x{0100}-\x{FFFE}]*
+								\.
+							)*
+							(
+								[a-zA-Z$_\x{00C0}-\x{00D6}\x{00D8}-\x{00F6}\x{00F8}-\x{00FF}\x{0100}-\x{FFFE}]
+								[a-zA-Z0-9_\x{00C0}-\x{00D6}\x{00D8}-\x{00F6}\x{00F8}-\x{00FF}\x{0100}-\x{FFFE}]*
+							)
+						)
+					</string>
 					<key>name</key>
-					<string>variable.other.interpolated.groovy</string>
-					<key>patterns</key>
-					<array>
-						<dict>
-							<key>match</key>
-							<string>\w</string>
-							<key>name</key>
-							<string>variable.other.interpolated.groovy</string>
-						</dict>
-						<dict>
-							<key>match</key>
-							<string>\.</string>
-							<key>name</key>
-							<string>keyword.other.dereference.groovy</string>
-						</dict>
-					</array>
+					<string>variable.other.groovy</string>
 				</dict>
 				<dict>
 					<key>begin</key>
