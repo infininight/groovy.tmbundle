@@ -1850,9 +1850,15 @@
 			<array>
 				<dict>
 					<key>match</key>
-					<string>\\.</string>
+					<string>\\[tbnrf\\"]</string>
 					<key>name</key>
 					<string>constant.character.escape.groovy</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\\u\h{4}</string>
+					<key>name</key>
+					<string>constant.character.escape.unicode.groovy</string>
 				</dict>
 				<dict>
 					<key>include</key>
@@ -1930,9 +1936,15 @@
 			<array>
 				<dict>
 					<key>match</key>
-					<string>\\.</string>
+					<string>\\[tbnrf\\']</string>
 					<key>name</key>
 					<string>constant.character.escape.groovy</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\\u\h{4}</string>
+					<key>name</key>
+					<string>constant.character.escape.unicode.groovy</string>
 				</dict>
 			</array>
 		</dict>
